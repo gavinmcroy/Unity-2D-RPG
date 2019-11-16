@@ -7,6 +7,8 @@
         <e p="Scripts" t="Include">
           <e p="CharacterMovement.cs" t="Include" />
           <e p="Entity.cs" t="Include" />
+          <e p="FollowCamera.cs" t="Include" />
+          <e p="NavigationPrompt.cs" t="Include" />
           <e p="Player.cs" t="Include" />
         </e>
       </e>

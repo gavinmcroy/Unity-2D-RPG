@@ -17,5 +17,4 @@ public class Entity : MonoBehaviour
     [SerializeField] private int noOfAttacks;
     [SerializeField] private string weapon;
     [SerializeField] private Vector2 position;
-    
 }

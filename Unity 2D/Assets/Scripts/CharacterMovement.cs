@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -16,6 +14,7 @@ public class CharacterMovement : MonoBehaviour
 
     private static readonly int XMove = Animator.StringToHash("xMove");
     private static readonly int YMove = Animator.StringToHash("yMove");
+    private static readonly int Moving = Animator.StringToHash("moving");
 
     private void Awake()
     {
@@ -30,6 +29,15 @@ public class CharacterMovement : MonoBehaviour
         _movePlayerVertical = Input.GetAxisRaw("Vertical");
         _movement = new Vector2(_movePlayerHorizontal, _movePlayerVertical);
         _rigidBody2D.velocity = _movement * speed;
+
+        if (Mathf.Approximately(_movePlayerHorizontal, 0) && Mathf.Approximately(_movePlayerVertical, 0))
+        {
+            _playerAnim.SetBool(Moving, false);
+        }
+        else
+        {
+            _playerAnim.SetBool(Moving, true);
+        }
 
         if (!Mathf.Approximately(_movePlayerVertical, 0))
         {

@@ -7,7 +7,7 @@ public class Player : Entity
     [SerializeField] private int money;
     private Rigidbody2D _rigidBody2D;
 
-    void Awake()
+    private void Awake()
     {
         _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
     }

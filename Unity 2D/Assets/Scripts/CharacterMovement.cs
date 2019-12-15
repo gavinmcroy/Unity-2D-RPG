@@ -18,9 +18,9 @@ public class CharacterMovement : MonoBehaviour
 
     private void Awake()
     {
-        _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
-        _playerAnim = (Animator) GetComponent(typeof(Animator));
-        _playerSpriteImage = (SpriteRenderer) GetComponent(typeof(SpriteRenderer));
+        _rigidBody2D = GetComponent<Rigidbody2D>();
+        _playerAnim = GetComponent<Animator>();
+        _playerSpriteImage = GetComponent<SpriteRenderer>();
     }
 
     private void Update()

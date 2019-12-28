@@ -14,9 +14,10 @@ public class ConversationManager : Singleton<ConversationManager>
 
     protected ConversationManager()
     {
+        
     }
 
-    IEnumerator DisplayConversation(Conversation conversation)
+    private IEnumerator DisplayConversation(Conversation conversation)
     {
         _isTalking = true;
         foreach (var conversationLine in conversation.conversationLines)

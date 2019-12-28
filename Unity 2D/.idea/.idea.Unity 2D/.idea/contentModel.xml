@@ -28,6 +28,7 @@
             <e p="MessagingManager.cs" t="Include" />
           </e>
           <e p="Navigation" t="Include">
+            <e p="NavigationManager.cs" t="Include" />
             <e p="NavigationPrompt.cs" t="Include" />
           </e>
           <e p="Sorting.cs" t="Include" />

@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using Navigation;
+using UnityEngine;
 
 public class NavigationPrompt : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Borders"))
+        if (NavigationManager.CanNavigate(this.tag))
         {
-            Debug.Log("Leaving Town");
+            Debug.Log("Attempting to exit via "+tag);
+            NavigationManager.NavigateTo(this.tag);
         }
     }
 }

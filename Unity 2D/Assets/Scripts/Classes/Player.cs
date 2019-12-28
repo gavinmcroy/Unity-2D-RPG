@@ -9,7 +9,7 @@ public class Player : Entity
 
     private void Awake()
     {
-        _rigidBody2D = (Rigidbody2D) GetComponent(typeof(Rigidbody2D));
+        _rigidBody2D = GetComponent<Rigidbody2D>();
     }
     
 }

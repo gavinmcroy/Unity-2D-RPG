@@ -29,6 +29,7 @@ public class CharacterMovement : MonoBehaviour
         _movePlayerVertical = Input.GetAxisRaw("Vertical");
         _movement = new Vector2(_movePlayerHorizontal, _movePlayerVertical);
         _rigidBody2D.velocity = _movement * speed;
+        
 
         if (Mathf.Approximately(_movePlayerHorizontal, 0) && Mathf.Approximately(_movePlayerVertical, 0))
         {

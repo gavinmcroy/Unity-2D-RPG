@@ -1,14 +1,31 @@
-﻿using Navigation;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class NavigationPrompt : MonoBehaviour
+namespace Navigation
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    public class NavigationPrompt : MonoBehaviour
     {
-        if (NavigationManager.CanNavigate(this.tag))
+        public Vector3 startingPosition;
+        
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            Debug.Log("Attempting to exit via "+tag);
-            NavigationManager.NavigateTo(this.tag);
+            GameState.SaveLastPosition = false;
+            GameState.SetLastScenePosition(SceneManager.GetActiveScene().name,startingPosition);
+            
+            if (NavigationManager.CanNavigate(this.tag))
+            {
+                Debug.Log("Attempting to exit via "+tag);
+                NavigationManager.NavigateTo(this.tag);
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (NavigationManager.CanNavigate(this.tag))
+            {
+                Debug.Log("Attempting to exit via "+this.tag);
+                NavigationManager.NavigateTo(this.tag);
+            }
         }
     }
 }

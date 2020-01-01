@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Entity : MonoBehaviour
+public class Entity : ScriptableObject
 {
     [SerializeField] private new string name;
     [SerializeField] private int age;

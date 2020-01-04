@@ -800,7 +800,12 @@ PrefabInstance:
     - target: {fileID: 3466951961804581948, guid: 0b89d4c688bcb4d7bac812d1c97d57c2,
         type: 3}
       propertyPath: startingPosition.y
-      value: -2.39
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3466951961804581948, guid: 0b89d4c688bcb4d7bac812d1c97d57c2,
+        type: 3}
+      propertyPath: startingPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b89d4c688bcb4d7bac812d1c97d57c2, type: 3}

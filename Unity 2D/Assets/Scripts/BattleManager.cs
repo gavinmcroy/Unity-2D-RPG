@@ -1,35 +1,76 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Navigation;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemySpawnPoints;
     [SerializeField] private GameObject[] enemyPrefab;
+    [SerializeField] private GameObject introPanel;
     [SerializeField] private AnimationCurve spawnAnimationCurve;
     [SerializeField] private CanvasGroup theButtons;
 
+    private Animator _battleStateManger;
+    private Animator _introPanelAnimator;
+    private Dictionary<int,BattleState> _battleStateHash = new Dictionary<int, BattleState>();
+    private BattleState _currentBattleState;
     private int _enemyCount;
+    private static readonly int BattleReady = Animator.StringToHash("BattleReady");
+    private static readonly int Intro = Animator.StringToHash("Intro");
 
-    enum BattlePhase
+    public enum BattleState
     {
-        PlayerAttack,
-        EnemyAttack
+        Begin_Battle,
+        Intro,
+        Player_Move,
+        Player_Attack,
+        Change_Control,
+        Enemy_Attack,
+        Battle_Result,
+        Battle_End
     }
 
-    private BattlePhase _phase;
-
+    private void Awake()
+    {
+        _introPanelAnimator = introPanel.GetComponent<Animator>();
+        _battleStateManger = GetComponent<Animator>();
+        if (_battleStateManger == null)
+        {
+            Debug.LogError("No BattleStateMachine Animator Found.");
+        }
+    }
+    
     private void Start()
     {
+        GetAnimationStates();
         _enemyCount = Random.Range(1, enemySpawnPoints.Length);
         StartCoroutine(SpawnEnemies());
-        _phase = BattlePhase.PlayerAttack;
+        
     }
 
     private void Update()
     {
-        if (_phase == BattlePhase.PlayerAttack)
+        _currentBattleState = _battleStateHash[_battleStateManger.GetCurrentAnimatorStateInfo(0).shortNameHash];
+        switch (_currentBattleState)
+        {
+            case BattleState.Intro:
+                _introPanelAnimator.SetTrigger(Intro);
+                break;
+            case BattleState.Player_Move:
+                break;
+            case BattleState.Player_Attack:
+                break;
+            case BattleState.Change_Control:
+                break;
+            case BattleState.Enemy_Attack:
+                break;
+            case BattleState.Battle_Result:
+                break;
+            case BattleState.Battle_End:
+                break;
+        }
+        if (_currentBattleState == BattleState.Player_Move)
         {
             theButtons.alpha = 1;
             theButtons.interactable = true;
@@ -49,7 +90,7 @@ public class BattleManager : MonoBehaviour
         NavigationManager.NavigateTo("Overworld");
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
         for (int i = 0; i < _enemyCount; i++)
         {
@@ -59,9 +100,10 @@ public class BattleManager : MonoBehaviour
             yield return StartCoroutine(MoveCharacterToPoint(enemySpawnPoints[i], newEnemy));
             newEnemy.transform.parent = enemySpawnPoints[i].transform;
         }
+        _battleStateManger.SetBool(BattleReady,true);
     }
 
-    IEnumerator MoveCharacterToPoint(GameObject destination, GameObject character)
+    private IEnumerator MoveCharacterToPoint(GameObject destination, GameObject character)
     {
         float timer = 0f;
         var startPosition = character.transform.position;
@@ -78,6 +120,15 @@ public class BattleManager : MonoBehaviour
         else
         {
             character.transform.position = destination.transform.position;
+        }
+    }
+
+    //---Something to do with animation states only referencable in hashes
+    private void GetAnimationStates()
+    {
+        foreach (var state in (BattleState[]) System.Enum.GetValues(typeof(BattleState)))
+        {
+            _battleStateHash.Add(Animator.StringToHash(state.ToString()),state);
         }
     }
 }
